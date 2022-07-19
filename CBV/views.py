@@ -48,7 +48,7 @@ class CourseListAPIView(APIView):
             return Response(courseSerializer.data)
         return Response(courseSerializer.errors)
 
-# ------------------------------------------------- @ GenericView @ -----------------------------------------------
+# ------------------------------------------------- @ Mixin View @ -----------------------------------------------
 class CourseListMixin(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     queryset            = Course.objects.all()
     serializer_class    = CourseSerializer
@@ -71,3 +71,14 @@ class CourseOtherMixin(generics.GenericAPIView, mixins.RetrieveModelMixin, mixin
 
     def delete(self, request, pk):
         return self.destroy(request, pk)
+
+# ------------------------------------------------- @ GenericView @ -----------------------------------------------
+# 1st Way
+class CourseOListGenericView(generics.ListAPIView, generics.CreateAPIView, generics.UpdateAPIView, generics.DestroyAPIView, generics.RetrieveAPIView):
+    queryset            = Course.objects.all()
+    serializer_class    = CourseSerializer
+
+# 2nd Way
+class CourseOListAllGenericView(generics.ListCreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+    queryset            = Course.objects.all()
+    serializer_class    = CourseSerializer

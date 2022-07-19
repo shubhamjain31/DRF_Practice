@@ -8,4 +8,10 @@ urlpatterns = [
 
     path('api/mixins/courses', views.CourseListMixin.as_view(), name='CourseListMixin.as_view()'),
     path('api/mixins/courses/<str:pk>', views.CourseOtherMixin.as_view(), name='CourseOtherMixin.as_view()'),
+
+    path('api/generic/courses', views.CourseOListGenericView.as_view(), name='CourseOListGenericView.as_view()'),
+    path('api/generic/courses/<str:pk>', views.CourseOListGenericView.as_view(), name='CourseOListGenericView.as_view()'),
+
+    path('api/all/generic/courses', views.CourseOListAllGenericView.as_view(), name='CourseOListAllGenericView.as_view()'),
+    path('api/all/generic/courses/<str:pk>', views.CourseOListAllGenericView.as_view(), name='CourseOListAllGenericView.as_view()'),
 ]
