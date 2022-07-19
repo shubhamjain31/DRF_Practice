@@ -1,11 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, mixins, generics
 
 from .models import Course
 from .serializers import CourseSerializer
 
 # Create your views here.
+
+# ------------------------------------------------- @ APIView @ -----------------------------------------------
 
 class CourseListAPIView(APIView):
     def get(self, request, pk=None):
@@ -45,3 +47,27 @@ class CourseListAPIView(APIView):
 
             return Response(courseSerializer.data)
         return Response(courseSerializer.errors)
+
+# ------------------------------------------------- @ GenericView @ -----------------------------------------------
+class CourseListMixin(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset            = Course.objects.all()
+    serializer_class    = CourseSerializer
+
+    def get(self, request):
+        return self.list(request)
+
+    def post(self, request):
+        return self.create(request)
+
+class CourseOtherMixin(generics.GenericAPIView, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    queryset            = Course.objects.all()
+    serializer_class    = CourseSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    def put(self, request, pk):
+        return self.update(request, pk)
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk)
