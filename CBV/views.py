@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, mixins, generics
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ViewSet, ModelViewSet
 
 from .models import Course
 from .serializers import CourseSerializer
@@ -124,3 +124,8 @@ class CourseOListViewSet(ViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
         course.delete()
         return Response({"msg": "done"})
+
+# ------------------------------------------------- @ ModelViewSet @ -----------------------------------------------
+class CourseOListModelViewSet(ModelViewSet):
+    queryset            = Course.objects.all()
+    serializer_class    = CourseSerializer
