@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, mixins, generics
+from rest_framework.viewsets import ViewSet
 
 from .models import Course
 from .serializers import CourseSerializer
@@ -82,3 +83,39 @@ class CourseOListGenericView(generics.ListAPIView, generics.CreateAPIView, gener
 class CourseOListAllGenericView(generics.ListCreateAPIView, generics.RetrieveUpdateDestroyAPIView):
     queryset            = Course.objects.all()
     serializer_class    = CourseSerializer
+
+# ------------------------------------------------- @ ViewSet @ -----------------------------------------------
+class CourseOListViewSet(ViewSet):
+    def list(self, request):
+        courses             = Course.objects.all()
+        serializer          = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk):
+        try:
+            courses             = Course.objects.get(pk=pk)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer          = CourseSerializer(courses)
+        return Response(serializer.data)
+
+    def create(self, request):
+        courses             = Course.objects.all()
+        serializer          = CourseSerializer(courses)
+        return Response(serializer.data)
+
+    def update(self, request, pk):
+        try:
+            courses             = Course.objects.get(pk=pk)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer          = CourseSerializer(courses)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        try:
+            courses             = Course.objects.get(pk=pk)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer          = CourseSerializer(courses)
+        return Response(serializer.data)
