@@ -100,22 +100,24 @@ class CourseOListViewSet(ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        courses             = Course.objects.all()
-        serializer          = CourseSerializer(courses)
-        return Response(serializer.data)
+        serializer          = CourseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
 
     def update(self, request, pk):
         try:
-            courses             = Course.objects.get(pk=pk)
+            course             = Course.objects.get(pk=pk)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer          = CourseSerializer(courses)
+        serializer          = CourseSerializer(course)
         return Response(serializer.data)
 
     def delete(self, request, pk):
         try:
-            courses             = Course.objects.get(pk=pk)
+            course             = Course.objects.get(pk=pk)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer          = CourseSerializer(courses)
+        serializer          = CourseSerializer(course)
         return Response(serializer.data)
