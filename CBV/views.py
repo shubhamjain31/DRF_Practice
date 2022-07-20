@@ -111,13 +111,16 @@ class CourseOListViewSet(ViewSet):
             course             = Course.objects.get(pk=pk)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer          = CourseSerializer(course)
-        return Response(serializer.data)
+        serializer          = CourseSerializer(instance=course, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
 
     def delete(self, request, pk):
         try:
             course             = Course.objects.get(pk=pk)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer          = CourseSerializer(course)
-        return Response(serializer.data)
+        course.delete()
+        return Response({"msg": "done"})

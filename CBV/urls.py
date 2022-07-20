@@ -4,7 +4,7 @@ from . import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-# router.register('courses', views.CourseOListViewSet, basename='course')
+router.register('viewset/courses', views.CourseOListViewSet, basename='course')
 
 urlpatterns = [
     # path('api/simple/employees/<str:pk>', views.employeeListView, name='employeeListView'),
