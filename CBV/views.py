@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status, mixins, generics
 from rest_framework.viewsets import ViewSet, ModelViewSet
 
-from .models import Course
-from .serializers import CourseSerializer
+from .models import Course, Subject, Instructor
+from .serializers import CourseSerializer, SubjectSerializer, InstructorSerializer
 
 # Create your views here.
 
@@ -85,7 +85,7 @@ class CourseOListAllGenericView(generics.ListCreateAPIView, generics.RetrieveUpd
     serializer_class    = CourseSerializer
 
 # ------------------------------------------------- @ ViewSet @ -----------------------------------------------
-class CourseOListViewSet(ViewSet):
+class CourseListViewSet(ViewSet):
     def list(self, request):
         courses             = Course.objects.all()
         serializer          = CourseSerializer(courses, many=True)
@@ -126,6 +126,15 @@ class CourseOListViewSet(ViewSet):
         return Response({"msg": "done"})
 
 # ------------------------------------------------- @ ModelViewSet @ -----------------------------------------------
-class CourseOListModelViewSet(ModelViewSet):
+class CourseListModelViewSet(ModelViewSet):
     queryset            = Course.objects.all()
     serializer_class    = CourseSerializer
+
+# ------------------------------------------------- @ Nested Serializers @ -----------------------------------------------
+class InstructorListModelViewSet(generics.ListCreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+    queryset            = Instructor.objects.all()
+    serializer_class    = InstructorSerializer
+
+class SubjectListModelViewSet(generics.ListCreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+    queryset            = Subject.objects.all()
+    serializer_class    = SubjectSerializer
