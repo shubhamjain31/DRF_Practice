@@ -138,3 +138,12 @@ class InstructorListModelViewSet(generics.ListCreateAPIView, generics.RetrieveUp
 class SubjectListModelViewSet(generics.ListCreateAPIView, generics.RetrieveUpdateDestroyAPIView):
     queryset            = Subject.objects.all()
     serializer_class    = SubjectSerializer
+
+# ------------------------------------------------- @ HyperLinkedModelSerializer @ -----------------------------------------------
+class SubjectDetailHyperLinkedModel(generics.RetrieveUpdateDestroyAPIView):
+    queryset            = Subject.objects.all()
+    serializer_class    = SubjectSerializer
+
+class InstructorDetailHyperLinkedModel(generics.RetrieveUpdateDestroyAPIView):
+    queryset            = Instructor.objects.all()
+    serializer_class    = InstructorSerializer

@@ -28,4 +28,7 @@ urlpatterns = [
 
     path('api/subject', views.SubjectListModelViewSet.as_view(), name='SubjectListModelViewSet'),
     path('api/subject/<str:pk>', views.SubjectListModelViewSet.as_view(), name='SubjectListModelViewSet'),
+
+    path('api/subject/details/<int:pk>', views.SubjectDetailHyperLinkedModel.as_view(), name='subject-details'),
+    path('api/instructor/details/<int:pk>', views.InstructorDetailHyperLinkedModel.as_view(), name='instructor-detail'),
 ]
